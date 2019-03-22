@@ -1,0 +1,77 @@
+*.[oa]
+*~
+*.pyc
+*.swp
+*.swo
+*.bin
+*.lock
+*.config
+.coverage
+htmlcov
+
+operdb
+opergit
+opersvc
+info
+flaskapp.py
+
+# Eclipse
+.project
+.pydevproject
+.settings
+
+.buildpath
+logs/*
+
+# git merging backup files
+*.orig
+
+# Wing IDE
+*.wpr
+*.wpu
+*.log
+
+# IDEA
+*.idea
+
+# OS X
+.DS_Store
+
+# Coffescript map file
+*.js.map
+
+# nodejs
+node_modules
+nvm/
+
+# python virtualenv
+pyenv/
+venv/
+
+# static of releng
+static/js/releng/*.js
+static/css/releng.css
+static/js/build/*.js
+static/css/build.css
+static/css/hostman.css
+
+# css of base
+static/css/base.css
+
+#coffee map
+*.map
+
+#js of create server
+static/js/build/package.js
+static/js/build/home.js
+
+.vagrant
+.ropeproject
+tags
+manage_local.py
+
+apps/*/fixtures/
+*.sqlite3
+.venv
+test.py
+test_v2.py
