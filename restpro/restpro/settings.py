@@ -121,6 +121,10 @@ CACHES = {
             # "IGNORE_EXCEPTIONS": True, # cache异常是否抛出异常并请求失败
             "CONNECTION_POOL_KWARGS": {"max_connections": 100}
         }
+    },
+    'throttling': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': './my_cache',
     }
 }
 
