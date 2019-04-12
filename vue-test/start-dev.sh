@@ -1,4 +1,5 @@
 #!/bin/bash
 
-npm install --no-save
+#if first run, need install package
+#npm install --no-save
 npm run dev

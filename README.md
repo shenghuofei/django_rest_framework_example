@@ -2,6 +2,7 @@
 #### 环境
 * os mac
 * Django 1.11.20
+* Redis v=5.0.3
 * django-redis 4.10.0
 * djangorestframework 3.5.4
 * vue 2.9.3

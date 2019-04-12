@@ -1,1 +1,2 @@
+source ~/work/restenv/bin/activate
 python manage.py runserver localhost:9000
