@@ -75,3 +75,23 @@ apps/*/fixtures/
 .venv
 test.py
 test_v2.py
+
+
+vue-test/.DS_Store
+vue-test/node_modules/
+vue-test//dist/
+vue-test/npm-debug.log*
+vue-test/yarn-debug.log*
+vue-test/yarn-error.log*
+vue-test//test/unit/coverage/
+vue-test//test/e2e/reports/
+vue-test/selenium-debug.log
+
+# Editor directories and files
+vue-test/.idea
+vue-test/.gitignore
+vue-test/.vscode
+vue-test/*.suo
+vue-test/*.ntvs*
+vue-test/*.njsproj
+vue-test/*.sln

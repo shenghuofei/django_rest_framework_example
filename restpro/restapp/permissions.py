@@ -17,3 +17,8 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 
         # 只有该snippet的所有者才允许写权限。
         return obj.owner == request.user
+
+class AllReadOnly(permissions.BasePermission):
+    print "all can get"
+    def has_object_permission(self, request, view, obj):
+        return True

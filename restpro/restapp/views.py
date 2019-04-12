@@ -13,7 +13,7 @@ from restapp.seris import spsl
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from rest_framework import permissions
-from restapp.permissions import IsOwnerOrReadOnly
+from restapp.permissions import IsOwnerOrReadOnly,AllReadOnly
 import json,random
 
 def request_started_handler(sender, **kwargs):
@@ -54,10 +54,13 @@ def sp_list(request):
 
 @api_view(['GET'])
 def profile(request):
-   print(request.user)
-   print(request.auth)
-   print(request.authenticators)
-   return Response(request.GET) 
+   print("users:", request.user)
+   print("auth:", request.auth)
+   print("request.authenticators:",request.authenticators)
+   if request.user:
+       return Response(request.user.username) 
+   else:
+       return Response("failed") 
 
 class csp_list(APIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)  #通过身份验证的有读写权限，否则只有只读权限
@@ -77,7 +80,10 @@ class csp_list(APIView):
         return Response(s.data)
 
 class getvalue(APIView):
+    # permission_classes = (permissions.IsAuthenticated,AllReadOnly)
     def get(self,request,format=None):
+        print("getvalue request:",request)
+        print("getvalue request:",request.user)
         data = []
         for i in range(12):
             data.append(random.randint(0, 100)) # 0到100间的随机数 

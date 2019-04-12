@@ -1,9 +1,12 @@
-#### 本例说明如何使用django-rest-framework
+#### 本例说明如何使用django-rest-framework及vue实现前后端分离
 #### 环境
 * os mac
 * Django 1.11.20
 * django-redis 4.10.0
 * djangorestframework 3.5.4
+* vue 2.9.3
+* node v8.11.1
+* npm 5.6.0
 #### 内容包括
 * 认证(包括自定义认证后端)
 * 权限(包括自定义权限管理)
