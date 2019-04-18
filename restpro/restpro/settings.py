@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'myauth.MyBackend',
+    'myauth.MyBackend', # 自定义的认证后端
 )
 
 # Application definition
@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework.authtoken',
+    'rest_framework.authtoken',  # restframework token认证
     'restapp',
 ]
 
@@ -109,8 +109,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+# 缓存配置
 CACHES = {
+    # 默认缓存后端
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/1",
@@ -123,12 +124,14 @@ CACHES = {
         }
     },
     'throttling': {
+        # 另外指定的缓存后端
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': './my_cache',
     }
 }
 
 REST_FRAMEWORK = {
+    # 限流使用的类
     'DEFAULT_THROTTLE_CLASSES': (
         #'rest_framework.throttling.AnonRateThrottle',
         #'rest_framework.throttling.UserRateThrottle',
@@ -172,3 +175,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# login_required 默认跳转的登录页面
+LOGIN_URL = '/api-auth/login/'
+
+

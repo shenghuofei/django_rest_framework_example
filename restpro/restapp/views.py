@@ -14,6 +14,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from rest_framework import permissions
 from restapp.permissions import IsOwnerOrReadOnly,AllReadOnly
+from django.contrib.auth.decorators import login_required
 import json,random
 
 def request_started_handler(sender, **kwargs):
@@ -140,3 +141,9 @@ class gsp_detail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
     queryset = Snippet.objects.all()
     serializer_class = spsl
+
+# login_required 和rest_framework的登录验证同时只用一个就可以了
+@login_required
+def test_login_required(request):
+    response = HttpResponse(json.dumps({'data':'ok','errno':'0'}))
+    return response 
