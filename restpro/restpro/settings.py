@@ -130,6 +130,43 @@ CACHES = {
     }
 }
 
+
+''' 
+设置如何在缓存中存储会话数据.
+如果你想使用数据库支持的会话(SESSION_ENGINE)，需要添加'django.contrib.sessions' 到INSTALLED_APPS设置中,在配置完成之后，请运行manage.py migrate来安装保存会话数据的一张数据库表.
+SESSION_ENGINE list: [
+    'django.contrib.sessions.backends.db',
+    'django.contrib.sessions.backends.file', # 使用文件缓存,可以通过 SESSION_FILE_PATH='xx'设置缓存文件路径
+    'django.contrib.sessions.backends.cache',  # session信息未持久化,但是性能高
+    'django.contrib.sessions.backends.cached_db', # session信息持久化,且性能也比较高,推荐此值
+    'django.contrib.sessions.backends.signed_cookies' # 基于cookie的会话
+]
+'''
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # 默认值,这里只是显示配置而已
+
+# 设置SESSION使用CACHES中的哪种缓存
+SESSION_CACHE_ALIAS = 'default' 
+
+# 建议保留SESSION_COOKIE_HTTPONLY 设置为True 以防止从JavaScript 中访问存储的数据 
+SESSION_COOKIE_HTTPONLY = True
+ 
+# 默认值SESSION_SAVE_EVERY_REQUEST = False,这里只是显示配置而已,只有在会话被修改时才会保存会话到数据库中;若要修改这个默认的行为，可以以设置 SESSION_SAVE_EVERY_REQUEST 为True,当设置为True时,Django 将对每个请求保存会话到数据库中
+SESSION_SAVE_EVERY_REQUEST = False
+
+'''
+你可以通过SESSION_EXPIRE_AT_BROWSER_CLOSE设置来控制会话框架使用浏览器时长的会话,还是持久的会话; 
+默认情况下，SESSION_EXPIRE_AT_BROWSER_CLOSE设置为False，表示会话的Cookie 保存在用户的浏览器中的时间为SESSION_COOKIE_AGE,如果你不想让大家每次打开浏览器时都需要登录时可以这样使用;
+如果SESSION_EXPIRE_AT_BROWSER_CLOSE 设置为True，Django 将使用浏览器时长的Cookie —— 用户关闭他们的浏览器时立即过期。 如果你想让大家在每次打开浏览器时都需要登录时可以这样使用 
+'''
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # 默认值,这里只是显示配置而已
+
+# 会话Cookie 的过期时间，以秒数为单位，默认：1209600（2个星期，以秒数为单位）
+SESSION_COOKIE_AGE = 1209600
+
+# 域名用于做会话的cookies. 将它设置为一个字符串，如".example.com"（注意前导点！） 对于跨域Cookie，或者使用None作为标准域cookie，默认值：None
+SESSION_COOKIE_DOMAIN = None  # 默认值,这里只是显示配置而已
+
+
 REST_FRAMEWORK = {
     # 限流使用的类
     'DEFAULT_THROTTLE_CLASSES': (
