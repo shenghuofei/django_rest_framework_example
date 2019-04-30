@@ -51,28 +51,41 @@ class AnonThrottle(SimpleRateThrottle):
         if request.user:
             return None
         # 匿名用户
-        return self.get_ident(request)
+        # return self.get_ident(request)
+        return self.cache_format % {
+            'scope': self.scope,
+            'ident': self.get_ident(request)
+        }
+
 
 ######对登录用户进行限流的类#####
-class UserThrottle(SimpleRateThrottle):
+class UserThrottle(UserRateThrottle):
     scope = "obj_user" # 不同的scope可以设置不同的限流策略
 
     def get_cache_key(self, request, view):
         # 登录用户且不是VIP用户
         if request.user:
             if request.user.username not in VIP:
-                return request.user
+                return self.cache_format % {
+                    'scope': self.scope,
+                    'ident': request.user
+                }
+                # return request.user
         # 匿名用户和VIP用户我不管
         return None
 
 ######对VIP用户进行限流的类#####
-class VIPUserThrottle(SimpleRateThrottle):
+class VIPUserThrottle(UserRateThrottle):
     scope = "obj_VIPuser"
 
     def get_cache_key(self, request, view):
         # VIP用户,如果VIP用户不限制的话，判断是VIP用户直接直接返回None即可,这里还是限制VIP用户的，只不过阈值较高
         if request.user:
             if request.user.username in VIP:#VIP用户
-                return request.user
+                return self.cache_format % {
+                    'scope': self.scope,
+                    'ident': request.user
+                }
+                # return request.user
         # 匿名用户和非VIP用户我不管
         return None
