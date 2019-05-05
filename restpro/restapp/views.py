@@ -143,6 +143,7 @@ class gsp_detail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = spsl
 
 # login_required 和rest_framework的登录验证同时只用一个就可以了
+# login_required检查如果未登陆则会跳转到settings.LOGIN_URL
 @login_required
 def test_login_required(request):
     response = HttpResponse(json.dumps({'data':'ok','errno':'0'}))
