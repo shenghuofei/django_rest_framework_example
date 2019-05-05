@@ -17,6 +17,8 @@
 * 登录登出
 * 基于视图的权限管理
 * 信号使用（可以控制在请求开始前后完成后执行一些逻辑）
+* 扩展manage.py实现自定义management command
+* 自定义中间件
 #### 部分说明
 * schema_view 返回api接口文档
 * 创建virtualenv,并激活
