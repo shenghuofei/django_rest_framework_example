@@ -3,6 +3,8 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.core.signals import request_started, request_finished
+from django.dispatch import receiver
+import django.dispatch
 from django.http import HttpResponse
 from rest_framework import status,mixins,generics
 from rest_framework.decorators import api_view
@@ -17,19 +19,42 @@ from restapp.permissions import IsOwnerOrReadOnly,AllReadOnly
 from django.contrib.auth.decorators import login_required
 import json,random
 
+
+'''
+自定义信号:
+使用django.dispatch.Signal定义信号，使用Signal.send()发送信号
+这段代码声明了request_done信号，它向接受者提供name和size参数
+接受者my_signal_callback收到信号后，简单输出内容
+'''
+request_done = django.dispatch.Signal(providing_args=["name","size"])
+@receiver(request_done)
+def my_signal_callback(sender, **kwargs):
+    print("this is my custom signal handler")
+    print(sender,kwargs)
+
+# 使用receiver装饰器连接信号
+@receiver(request_finished)
+def my_callback(sender, **kwargs):
+    print("this is another Request finished handler!")
+
 def request_started_handler(sender, **kwargs):
     print('start request')
+    print('start kwargs',kwargs)
     print(dir(sender))
 
 def request_finished_handler(sender, **kwargs):
     print('finish request')
+    print('finish kwargs',kwargs)
     print(dir(sender))
 
 @api_view(['GET','POST'])
-def signal_test(requsts):
+def signal_test(request):
+    # 使用connect连接信号接受者
     request_started.connect(request_started_handler)
     print('i am signal test')
     request_finished.connect(request_finished_handler)
+    # 发送自定义信号
+    request_done.send(sender=request, name="signal_test", size=123)
     return Response('ok')
 
 @api_view(['GET','POST'])
