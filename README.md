@@ -46,3 +46,8 @@
     res.json()
     {u'errno': u'0', u'data': u'ok'}
     ```
+#### 相关链接
+1. [django源码](https://github.com/django/django)
+2. [django文档](https://docs.djangoproject.com/zh-hans)
+3. [django-rest-framework源码](https://github.com/encode/django-rest-framework)
+4. [django-rest-framework文档](https://q1mi.github.io/Django-REST-framework-documentation)
