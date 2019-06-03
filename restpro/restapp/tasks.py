@@ -26,6 +26,7 @@ def xsum(self, numbers):
 
 @shared_task(bind=True, queue='custom', soft_time_limit=300)
 def cron1(self, arg1, arg2):
+    # 这里调用django的management命令，可以是内置的也可以是扩展的，比如这里调用扩展的命令extent_manage_example
     from django.core.management import call_command
     call_command('extent_manage_example')
     print('arg1:', arg1)
