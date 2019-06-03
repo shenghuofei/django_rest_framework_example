@@ -22,6 +22,7 @@ flaskapp.py
 
 .buildpath
 logs/*
+restpro/logs/*
 
 # git merging backup files
 *.orig

@@ -1,5 +1,6 @@
 #!/use/bin/env python
 #-*- coding:utf-8 -*-
+from __future__ import absolute_import
 """
 Django settings for restpro project.
 
@@ -13,6 +14,10 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+
+#for celery
+from kombu import Queue
+from celery.schedules import crontab
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -217,4 +222,46 @@ STATIC_URL = '/static/'
 # login_required 默认跳转的登录页面
 LOGIN_URL = '/api-auth/login/'
 
+# Celery
+CELERY_BROKER_URL = [
+    'redis://localhost:6379/5',
+    'redis://localhost:6379/6' # 这里可以是其他机器上的redis，多个redis实现高可用
+]
+
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/7'
+
+CELERY_BROKER_TRANSPORT_OPTIONS = {
+    'socket_connect_timeout': 2,
+}
+
+CELERY_RESULT_BACKEND_TRANSPORT_OPTIONS = {
+    'socket_connect_timeout': 2,
+}
+
+CELERY_ACCEPT_CONTENT = ['pickle', 'json', 'msgpack', 'yaml']
+
+CELERY_TASK_SERIALIZER = 'pickle'
+CELERY_TASK_DEFAULT_QUEUE = 'default'
+CELERY_TASK_DEFAULT_EXCHANGE_TYPE = 'topic'
+CELERY_TASK_DEFAULT_ROUTING_KEY = 'default'
+
+CELERY_TASK_QUEUES = (
+    Queue('default', routing_key='default'),
+    Queue('custom', routing_key='custom')
+)
+
+CELERY_TASK_ROUTES = {
+}
+
+CELERY_BEAT_SCHEDULE = {
+    'task-number-one': {
+        'task': 'restapp.tasks.cron1',
+        'schedule': crontab(),
+        'args': ('arg1','arg2')
+    },
+    'task-number-two': {
+        'task': 'restapp.tasks.cron2',
+        'schedule': crontab(minute=0, hour='*/3,10-19'),
+    }
+}
 
