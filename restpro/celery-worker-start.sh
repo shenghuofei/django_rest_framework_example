@@ -6,6 +6,10 @@ set -e
 
 export DJANGO_SETTINGS_MODULE=restpro.settings
 
+if [ ! -d './logs' ] ; then
+    mkdir logs
+fi
+
 celery worker \
     -A restpro \
     -Q default,custom \

@@ -3,7 +3,7 @@
 from __future__ import absolute_import, unicode_literals
 from celery import shared_task
 
-#如果bind=TrUe,那么task的第一个参数为self
+#如果bind=True,那么task的第一个参数为self
 @shared_task(bind=True, queue='default', soft_time_limit=300)
 def add(self, x, y):
     return x + y
