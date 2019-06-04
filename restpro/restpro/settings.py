@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',  # restframework token认证
+    #'django_celery_beat', # pip install django-celery-beat,但是也不支持beat多机启动
     'restapp',
 ]
 
@@ -205,7 +206,8 @@ REST_FRAMEWORK = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
+CELERY_TIMEZONE = TIME_ZONE
 
 USE_I18N = True
 
@@ -229,6 +231,30 @@ CELERY_BROKER_URL = [
 ]
 
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/7'
+
+'''
+pip install celery-redbeat
+celery-redbeat启动多个beat实例虽然不会重复调度，
+但是当前生效调度器停止后，其他调度器无法接管调度任务，导致任务不会再被调度执行
+REDBEAT_REDIS_URL配置celery REDBEAT 存储定时任务调度情况地址
+'''
+REDBEAT_REDIS_URL = 'redis://localhost:6379/8'
+
+# The maximum number of seconds beat can sleep between checking the schedule.
+CELERYBEAT_MAX_LOOP_INTERVAL = 30
+
+'''
+pip install celery-redundant-scheduler
+配置中host,prot...必须小写，否则会报错，官方文档有问题
+启动多个beat测试发现无法正常调度任务
+
+CELERYBEAT_REDUNDANT_BACKEND_OPTIONS = {
+    'host': 'localhost',
+    'port': 6379,
+    'db': 9,
+    # 'PASSWORD': 'secret'
+}
+'''
 
 CELERY_BROKER_TRANSPORT_OPTIONS = {
     'socket_connect_timeout': 2,
