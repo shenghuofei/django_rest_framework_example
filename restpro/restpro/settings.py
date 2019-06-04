@@ -235,7 +235,7 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379/7'
 '''
 pip install celery-redbeat
 celery-redbeat启动多个beat实例虽然不会重复调度，
-但是当前生效调度器停止后，其他调度器无法接管调度任务，导致任务不会再被调度执行
+但是当前生效调度器停止后，其他调度器接管其调度任务会有延迟，可能会导致任务少执行几次
 REDBEAT_REDIS_URL配置celery REDBEAT 存储定时任务调度情况地址
 '''
 REDBEAT_REDIS_URL = 'redis://localhost:6379/8'
