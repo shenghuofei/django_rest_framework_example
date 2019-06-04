@@ -2,3 +2,4 @@ Django                        1.11.20
 django-redis                  4.10.0   
 djangorestframework           3.5.4
 Celery                        4.3.0
+celery-redbeat                0.13.0
