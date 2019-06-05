@@ -49,6 +49,7 @@
     res.json()
     {u'errno': u'0', u'data': u'ok'}
     ```
+* restapp/views中my_init_run展示如何开启一些程序启动就需要自动开始执行的功能
 #### celery使用说明
 1. 在restpro/restpro下新增celery.py （defines the Celery instance）
 2. 在restpro/restpro下的__init__.py中import this app（This ensures that the app is loaded when Django starts so that the @shared_task decorator (mentioned later) will use it）

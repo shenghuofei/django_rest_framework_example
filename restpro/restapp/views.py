@@ -172,4 +172,12 @@ class gsp_detail(generics.RetrieveUpdateDestroyAPIView):
 @login_required
 def test_login_required(request):
     response = HttpResponse(json.dumps({'data':'ok','errno':'0'}))
-    return response 
+    return response
+
+# 当服务启动就自动开始执行
+def my_init_run():
+    import time
+    while(True):
+        print('when start to run')
+        time.sleep(2)
+my_init_run()
