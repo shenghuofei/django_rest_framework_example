@@ -106,7 +106,10 @@ class csp_list(APIView):
         return Response(s.data)
 
 class getvalue(APIView):
-    # permission_classes = (permissions.IsAuthenticated,AllReadOnly)
+    # permission_classes = (permissions.IsAuthenticated,AllReadOnly,)
+    # 在view中指定特定的throttle classes
+    from mythrottle import SpecUserThrottle 
+    throttle_classes = (SpecUserThrottle,)
     def get(self,request,format=None):
         print("getvalue request:",request)
         print("getvalue request:",request.user)
@@ -174,10 +177,13 @@ def test_login_required(request):
     response = HttpResponse(json.dumps({'data':'ok','errno':'0'}))
     return response
 
-# 当服务启动就自动开始执行
+'''
+当服务启动就自动开始执行,在开发模式(runserver)下测试发现确实在启动是执行了
+但是执行后,就无法响应其他的请求了，貌似阻止了Django的启动过程
+'''
 def my_init_run():
     import time
     while(True):
         print('when start to run')
         time.sleep(2)
-my_init_run()
+# my_init_run()

@@ -17,7 +17,7 @@
 * django-redis作为缓存后端
 * 基于django-rest-framework的token认证
 * 登录登出
-* 基于视图的权限管理
+* 基于视图的权限/限流管理
 * 信号使用（可以控制在请求开始前后完成后执行一些逻辑）
 * 扩展manage.py实现自定义management command
 * 自定义中间件
@@ -49,7 +49,6 @@
     res.json()
     {u'errno': u'0', u'data': u'ok'}
     ```
-* restapp/views中my_init_run展示如何开启一些程序启动就需要自动开始执行的功能
 #### celery使用说明
 1. 在restpro/restpro下新增celery.py （defines the Celery instance）
 2. 在restpro/restpro下的__init__.py中import this app（This ensures that the app is loaded when Django starts so that the @shared_task decorator (mentioned later) will use it）

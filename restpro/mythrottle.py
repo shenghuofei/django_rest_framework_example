@@ -89,3 +89,8 @@ class VIPUserThrottle(UserRateThrottle):
                 # return request.user
         # 匿名用户和非VIP用户我不管
         return None
+
+
+class SpecUserThrottle(UserRateThrottle):
+    scope = "special_url"
+    rate = '30/min'
