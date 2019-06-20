@@ -91,6 +91,6 @@ class VIPUserThrottle(UserRateThrottle):
         return None
 
 
-class SpecUserThrottle(UserRateThrottle):
+class SpecUserThrottle(UserThrottle):
     scope = "special_url"
     rate = '30/min'

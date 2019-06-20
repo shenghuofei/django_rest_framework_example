@@ -224,6 +224,8 @@ STATIC_URL = '/static/'
 # login_required 默认跳转的登录页面
 LOGIN_URL = '/api-auth/login/'
 
+SSO_API_URL = ''
+
 # Celery
 CELERY_BROKER_URL = [
     'redis://localhost:6379/5',

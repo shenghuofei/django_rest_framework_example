@@ -29,6 +29,7 @@ class extentmiddleware(MiddlewareMixin):
     def process_response(self, request, response):
         print('after request')
         # 处理完成时间减去请求开始时间即响应时间
-        print('request time:', time.time()-request._my_middle_start)
+        if hasattr(request, '_my_middle_start'):
+            print('request time:', time.time()-request._my_middle_start)
         return response
 

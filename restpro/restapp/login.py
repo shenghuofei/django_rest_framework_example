@@ -2,6 +2,7 @@
 #-*- coding:utf-8 -*-
 
 from django.contrib import auth
+from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME, authenticate
 from urllib2 import urlopen, Request
 from django.shortcuts import redirect
@@ -25,6 +26,7 @@ def verify(request):
         time = request.GET.get('time', '')
         sign = request.GET.get('sign', '')
     #username = 'from sso get username'
+    header = {}
     req = Request(settings.SSO_API_URL + '/session/' + sid, headers=header)
     resp = urlopen(req)
     username = json.loads(resp.read())['data']['login']
@@ -37,6 +39,8 @@ def verify(request):
         return True   
     return False
 
+
+# 此方法只是展示如何使用SSO的伪代码，未登陆不能直接请求
 def login(request):
     session_key = 'sso_next'
     if verify(request):
