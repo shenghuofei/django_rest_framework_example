@@ -76,6 +76,12 @@
    2. 修改配置: 在settings.py中增加REDBEAT_REDIS_URL,并设置CELERYBEAT_MAX_LOOP_INTERVAL = 30(默认300),以减小延迟时间,默认的redbeat_lock_timeout = 5 * CELERYBEAT_MAX_LOOP_INTERVAL
    3. 使用-S redbeat.RedBeatScheduler启动celery beat: `celery -A restpro beat -l info -S redbeat.RedBeatScheduler`
 
+#### django template自定义tag及filter说明
+1. 在app目录下(models.py同级)创建templatetags目录(如:restapp/templatetags)，并在templatetags下创建__init__.py(确保此目录为python包)和自定义tag及filter的文件(如:my_custom_tag.py);**注意: templatetags必须在某个app下**
+2. 在自定义tag及filter的文件(如:my_custom_tag.py)中实现自定tag及filter
+3. 在templates(具体目录可以在settings.py中配置,默认会在各app下找)的模板中(如:restpro/templates/index.html)加载自定义的tag及filter:`{% load my_custom_tag %}`**注意: my_custom_tag是自定义tag及filter的模块名而不是app名**
+4. 可以在模板中使用自定义的tag及filter了，见restpro/templates/index.html中的set及lower
+
 #### 相关链接
 1. [django源码](https://github.com/django/django)
 2. [django文档](https://docs.djangoproject.com/zh-hans)

@@ -1,0 +1,14 @@
+<!-- 加载自定的tag及filter-->
+{% load my_custom_tag %}
+<!-- 使用with定义变量,等号前后不能有空格-->
+{% with title='My template' subtitle='Sub title' %}
+{{ title }} <br>
+{{ subtitle | lower }} <br>
+{% endwith %}
+
+<!-- 使用自定义的tag(set)定义变量-->
+name: {{ name }}<br>
+{% set age 30 %}<br>
+age: {{ age }}<br>
+errno: {{ errno }}<br>
+data: {{ data }}<br>

@@ -46,6 +46,7 @@ urlpatterns = [
     url(r'^vue/$', views.vueget.as_view()),
     url(r'^getvalue/$', views.getvalue.as_view()),
     url(r'^test/login/required$', views.test_login_required),
+    url(r'^template$', views.render_to_html),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

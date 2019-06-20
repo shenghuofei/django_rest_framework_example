@@ -6,6 +6,7 @@ from django.core.signals import request_started, request_finished
 from django.dispatch import receiver
 import django.dispatch
 from django.http import HttpResponse
+from django.shortcuts import render,render_to_response
 from rest_framework import status,mixins,generics
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
@@ -176,6 +177,9 @@ class gsp_detail(generics.RetrieveUpdateDestroyAPIView):
 def test_login_required(request):
     response = HttpResponse(json.dumps({'data':'ok','errno':'0'}))
     return response
+
+def render_to_html(request):
+    return render_to_response('index.html', {'name': 'render_to_html', 'errno': 0, 'data': 'ok'})
 
 '''
 当服务启动就自动开始执行,在开发模式(runserver)下测试发现确实在启动是执行了

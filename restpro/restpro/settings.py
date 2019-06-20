@@ -22,6 +22,8 @@ from celery.schedules import crontab
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+def path(*a):
+    return os.path.join(BASE_DIR, *a)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
@@ -71,7 +73,7 @@ ROOT_URLCONF = 'restpro.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [path('templates'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
