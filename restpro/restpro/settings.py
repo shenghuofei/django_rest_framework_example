@@ -221,11 +221,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-STATIC_URL = '/static/'
+# 与url中静态资源路径前缀一致
+STATIC_URL = '/restpro/staticfiles/'
 
+# STATICFILES_DIRS is the list of folders where Django will search for additional static files aside from the static folder of each app installed
 STATICFILES_DIRS = (
-    "static"
+    "static",
 )
+
+# STATIC_ROOT is the folder where static files will be stored after using manage.py collectstatic
+STATIC_ROOT = path('sitestatic')
+
+# MEDIA_ROOT is the folder where files uploaded using FileField will go.
+MEDIA_ROOT = path('media')
 
 # login_required 默认跳转的登录页面
 LOGIN_URL = '/api-auth/login/'
