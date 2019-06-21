@@ -18,6 +18,7 @@ Including another URLconf
 from django.conf import settings 
 from django.conf.urls import url
 from django.contrib import admin
+from django.views.static import serve
 from rest_framework.urlpatterns import format_suffix_patterns
 from django.conf.urls import include
 from rest_framework.schemas import get_schema_view
@@ -62,3 +63,13 @@ urlpatterns += [
     # 登出一个用户，然后重定向到登录页面,login_url 默认为settings.LOGIN_URL
     url('^django/logout/then/login', auth_views.logout_then_login)
 ]
+
+if settings.DEBUG:
+    # Serve static files for development
+    urlpatterns += [
+        url(r'^restpro/staticfiles/(?P<path>.*)$', serve, {
+            'document_root': settings.STATICFILES_DIRS, 'show_indexes': True
+        }),
+    ]
+    from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+    urlpatterns += staticfiles_urlpatterns()

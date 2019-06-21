@@ -223,6 +223,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = (
+    "static"
+)
+
 # login_required 默认跳转的登录页面
 LOGIN_URL = '/api-auth/login/'
 
