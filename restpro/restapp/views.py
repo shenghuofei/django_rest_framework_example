@@ -1,8 +1,9 @@
 # -*- coding:utf-8 -*-
-from django.shortcuts import render
+from __future__ import absolute_import, unicode_literals
 
 # Create your views here.
 from django.core.signals import request_started, request_finished
+from django.views.decorators.csrf import csrf_exempt
 from django.dispatch import receiver
 import django.dispatch
 from django.http import HttpResponse
@@ -19,6 +20,7 @@ from rest_framework import permissions
 from restapp.permissions import IsOwnerOrReadOnly,AllReadOnly
 from django.contrib.auth.decorators import login_required
 import json,random
+from .forms import NameForm
 
 
 '''
@@ -180,6 +182,30 @@ def test_login_required(request):
 
 def render_to_html(request):
     return render_to_response('index.html', {'name': 'render_to_html', 'errno': 0, 'data': 'ok'})
+
+# 如果post请求的视图没加 @csrf_exempt，会报CSRF token missing or incorrect. 
+@csrf_exempt
+def get_name(request):
+    # 如果这是一个POST请求,我们就需要处理表单数据
+    if request.method == 'POST':
+        # 创建一个表单实例,并且使用表单数据填充request请求:
+        print(request.POST)
+        form = NameForm(request.POST)
+        # 检查数据有效性:
+        if form.is_valid():
+            # 在需要时，可以在form.cleaned_date中处理数据
+            # ...
+            # 重定向到一个新的URL或返回处理结果:
+            print('form data:', form.cleaned_data)
+            return HttpResponse(json.dumps({'data':'ok','errno':'0'}))
+        else:
+            return HttpResponse(json.dumps({'data':form.errors,'errno':'1'}))
+
+    # 如果是GET或者其它请求方法，我们将创建一个空的表单。
+    else:
+        form = NameForm()
+
+    return render(request, 'name.html', {'form': form})
 
 '''
 当服务启动就自动开始执行,在开发模式(runserver)下测试发现确实在启动是执行了
